@@ -19,7 +19,8 @@ import javax.servlet.http.HttpSession;
 public class GoodsController {
     @Autowired
     private IUserService userService;
-    @RequestMapping("/toList")
+
+    /*@RequestMapping("/toList")
     public String toList(HttpServletRequest request, HttpServletResponse response, Model model, @CookieValue("userTicket") String ticket){
         if(StringUtils.isEmpty(ticket)){
             return "login";
@@ -29,6 +30,12 @@ public class GoodsController {
         if(null==user){
             return "login";
         }
+        model.addAttribute("user",user);
+        return  "goodsList";
+    }*/
+
+    @RequestMapping("/toList")
+    public String toList(Model model, User user){
         model.addAttribute("user",user);
         return  "goodsList";
     }
