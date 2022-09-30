@@ -1,0 +1,27 @@
+spring:
+  thymeleaf:
+    cache: false
+  #数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: DateHikariCP
+      minimum-idle: 5
+      idle-timeout: 1800000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+    username: gxy
+    password: 123456
+    url: jdbc:mysql://81.70.13.188:3306/shopsystem?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+
+#Mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: com.xxxx.hcss.pojo
+
+logging:
+  level:
+      com.xxxx.hcss.mapper: debug
