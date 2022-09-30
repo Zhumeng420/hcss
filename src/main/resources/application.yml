@@ -1,6 +1,18 @@
 spring:
   thymeleaf:
     cache: false
+  #redis配置
+  redis:
+    host: 120.48.53.230
+    port: 6666
+    database: 0
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: 10000ms
+        max-idle: 200
+        min-idle: 5
   #数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

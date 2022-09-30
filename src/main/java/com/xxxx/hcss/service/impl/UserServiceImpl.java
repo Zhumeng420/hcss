@@ -9,6 +9,7 @@ import com.xxxx.hcss.utils.MD5Util;
 import com.xxxx.hcss.utils.ValidatorUtil;
 import com.xxxx.hcss.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -29,7 +30,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private RedisTemplate redisTemplate;
     @Override
     public RespBean doLogin(LoginVo loginVo, HttpServletRequest request, HttpServletResponse response) {
         String phone=loginVo.getMobile();
@@ -60,8 +62,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return RespBean.error(RespBeanEnum.LOGIN_ERROR);
         }
         String ticket= UUIDUtil.uuid();//生成cookie
-        request.getSession().setAttribute(ticket,user);
+        redisTemplate.opsForValue().set("user:"+ticket,user);//将用户信息存入redis中
+        //request.getSession().setAttribute(ticket,user);
         CookieUtil.setCookie(request,response,"userTicket",ticket);
         return RespBean.success();
+    }
+
+    @Override
+    public User getUserByCookie(String userTicket,HttpServletRequest request,HttpServletResponse response) {
+        if(StringUtils.isEmpty(userTicket)){
+            return null;
+        }
+        User user=(User)redisTemplate.opsForValue().get("user:"+userTicket);
+        if (user!=null){
+            CookieUtil.setCookie(request,response,"userTicket",userTicket);
+        }
+        return user;
     }
 }
