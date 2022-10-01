@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -65,11 +67,11 @@ public class OrderInfo implements Serializable {
     private Integer status;
 
     @TableField("create_date")
-    private LocalDateTime createDate;
+    private Date createDate;
 
     @ApiModelProperty(value = "支付时间")
     @TableField("pay_date")
-    private LocalDateTime payDate;
+    private Date payDate;
 
 
 }

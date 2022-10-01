@@ -39,6 +39,6 @@ public class GoodsVo  {
         private Integer goodsStock;
         private Integer seckillPrice;
         private Integer stockCount;
-        private LocalDateTime startDate;
-        private LocalDateTime endDate;
+        private Date startDate;
+        private Date endDate;
 }

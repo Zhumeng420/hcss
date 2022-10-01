@@ -2,6 +2,8 @@ package com.xxxx.hcss.service;
 
 import com.xxxx.hcss.pojo.OrderInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xxxx.hcss.pojo.User;
+import com.xxxx.hcss.vo.GoodsVo;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IOrderInfoService extends IService<OrderInfo> {
 
+    OrderInfo seckill(User user, GoodsVo goods);
 }

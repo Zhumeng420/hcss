@@ -5,6 +5,7 @@ import com.xxxx.hcss.pojo.User;
 import com.xxxx.hcss.mapper.UserMapper;
 import com.xxxx.hcss.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xxxx.hcss.utils.JsonUtil;
 import com.xxxx.hcss.utils.MD5Util;
 import com.xxxx.hcss.utils.ValidatorUtil;
 import com.xxxx.hcss.vo.*;
@@ -16,6 +17,7 @@ import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 /**
  * <p>
@@ -46,11 +48,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if(!ValidatorUtil.isMobile(phone)){//手机号不合规范报错
             return RespBean.error(RespBeanEnum.MOBILE_ERROR);
         }
-
-        //QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        //queryWrapper.eq("phone", mobile);
-
-
         User user=userMapper.selectById(phone);//到数据库中去查询该用户
         if(null==user){//如果找不用户则提示登录错误
             return RespBean.error(RespBeanEnum.LOGIN_ERROR);
@@ -62,10 +59,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return RespBean.error(RespBeanEnum.LOGIN_ERROR);
         }
         String ticket= UUIDUtil.uuid();//生成cookie
-        redisTemplate.opsForValue().set("user:"+ticket,user);//将用户信息存入redis中
+        redisTemplate.opsForValue().set("user:"+ticket, Objects.requireNonNull(JsonUtil.object2JsonStr(user)));//将用户信息存入redis中
         //request.getSession().setAttribute(ticket,user);
         CookieUtil.setCookie(request,response,"userTicket",ticket);
-        return RespBean.success();
+        return RespBean.success(ticket);
     }
 
     @Override
@@ -73,8 +70,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if(StringUtils.isEmpty(userTicket)){
             return null;
         }
-        User user=(User)redisTemplate.opsForValue().get("user:"+userTicket);
-        if (user!=null){
+        String userJson=(String)redisTemplate.opsForValue().get("user:"+userTicket);
+        User user=JsonUtil.jsonStr2Object(userJson,User.class);
+        if (null!=user){
             CookieUtil.setCookie(request,response,"userTicket",userTicket);
         }
         return user;

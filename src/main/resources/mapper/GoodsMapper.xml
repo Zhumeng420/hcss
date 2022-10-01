@@ -20,21 +20,21 @@
         id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock, create_date, update_date
     </sql>
 
-<resultMap id="GoodsVo" type="com.xxxx.hcss.vo.GoodsVo">
-    <id column="id" property="id" />
-    <result column="goods_name" property="goodsName" />
-    <result column="goods_title" property="goodsTitle" />
-    <result column="goods_img" property="goodsImg" />
-    <result column="goods_detail" property="goodsDetail" />
-    <result column="goods_price" property="goodsPrice" />
-    <result column="goods_stock" property="goodsStock" />
-    <result column="create_date" property="createDate" />
-    <result column="update_date" property="updateDate" />
-    <result column="seckill_price" property="seckillPrice" />
-    <result column="stock_count" property="stockCount" />
-    <result column="start_date" property="startDate" />
-    <result column="end_date" property="endDate" />
-</resultMap>
+    <resultMap id="GoodsVo" type="com.xxxx.hcss.vo.GoodsVo">
+        <id column="id" property="id" />
+        <result column="goods_name" property="goodsName" />
+        <result column="goods_title" property="goodsTitle" />
+        <result column="goods_img" property="goodsImg" />
+        <result column="goods_detail" property="goodsDetail" />
+        <result column="goods_price" property="goodsPrice" />
+        <result column="goods_stock" property="goodsStock" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="seckill_price" property="seckillPrice" />
+        <result column="stock_count" property="stockCount" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+    </resultMap>
     <select id="findGoodsVo" resultMap="GoodsVo">
         SELECT
             g.id,
@@ -51,6 +51,26 @@
         FROM
             `goods` g
                 LEFT JOIN seckill_goods AS sg ON g.id = sg.goods_id
+    </select>
+
+    <select id="findGoodsVoByGoodsId" resultMap="GoodsVo">
+        SELECT
+            g.id,
+            g.goods_name,
+            g.goods_title,
+            g.goods_img,
+            g.goods_detail,
+            g.goods_price,
+            g.goods_stock,
+            sg.seckill_price,
+            sg.stock_count,
+            sg.start_date,
+            sg.end_date
+        FROM
+            `goods` g
+                LEFT JOIN seckill_goods AS sg ON g.id = sg.goods_id
+        WHERE
+            g.id=#{goodsId}
     </select>
 
 </mapper>

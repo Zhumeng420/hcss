@@ -1,3 +1,4 @@
+
 spring:
   thymeleaf:
     cache: false
@@ -37,3 +38,4 @@ mybatis-plus:
 logging:
   level:
       com.xxxx.hcss.mapper: debug
+
