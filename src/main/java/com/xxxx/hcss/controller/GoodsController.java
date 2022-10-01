@@ -2,6 +2,7 @@ package com.xxxx.hcss.controller;
 
 import com.xxxx.hcss.pojo.User;
 //import net.sf.jsqlparser.Model;
+import com.xxxx.hcss.service.IGoodsService;
 import com.xxxx.hcss.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ import javax.servlet.http.HttpSession;
 public class GoodsController {
     @Autowired
     private IUserService userService;
-
+    @Autowired
+    private IGoodsService goodsService;
     /*@RequestMapping("/toList")
     public String toList(HttpServletRequest request, HttpServletResponse response, Model model, @CookieValue("userTicket") String ticket){
         if(StringUtils.isEmpty(ticket)){
@@ -37,6 +39,7 @@ public class GoodsController {
     @RequestMapping("/toList")
     public String toList(Model model, User user){
         model.addAttribute("user",user);
-        return  "goodsList";
+        model.addAttribute("goodsList",goodsService.findGoodsVo());
+        return  "../static/goodsList";
     }
 }
