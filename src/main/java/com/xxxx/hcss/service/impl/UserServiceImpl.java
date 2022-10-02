@@ -12,6 +12,8 @@ import com.xxxx.hcss.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -27,6 +29,7 @@ import java.util.Objects;
  * @author zhumeng
  * @since 2022-09-29
  */
+
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 

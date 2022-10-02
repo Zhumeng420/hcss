@@ -24,8 +24,8 @@
             background-image: url('http://81.70.13.188:9000/sharefolder/logback.png');
         }
     </style>
-
 </head>
+<body>
 <div class="content">
     <div class="title">
         <h4>用户登录</h4>
@@ -82,6 +82,10 @@
                 mobile: $("#mobile").val(),
                 password: password
             },
+            xhrFields:{
+                withCredentials:true
+            },
+            crossDomain:true,
             success: function (data) {
                 layer.closeAll();
                 if (data.code === 200) {

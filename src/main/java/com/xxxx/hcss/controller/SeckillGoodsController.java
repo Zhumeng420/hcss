@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author zhumeng
  * @since 2022-10-01
  */
+
 @RestController
 @RequestMapping("/seckillGoods")
 public class SeckillGoodsController {
